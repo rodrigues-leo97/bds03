@@ -34,7 +34,8 @@ public class DepartmentControllerIT {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		
+
+		//ele já faz o login nos testes, mas se olhar no seed do banco ainda não tem os operadores de cada um, tem que implementar
 		operatorUsername = "ana@gmail.com";
 		operatorPassword = "123456";
 		adminUsername = "bob@gmail.com";
@@ -42,13 +43,13 @@ public class DepartmentControllerIT {
 	}
 	
 	@Test
-	public void findAllShouldReturnAllResourcesSortedByNameWhenAdminLogged() throws Exception {
+	public void findAllShouldReturnAllResourcesSortedByNameWhenAdminLogged() throws Exception { //retornar todos os recursos ordenados por nome quando estiver logado com ADMIN
 		
-		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
+		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword); //pegar um token de admin
 		
 		ResultActions result =
 				mockMvc.perform(get("/departments")
-					.header("Authorization", "Bearer " + accessToken)
+					.header("Authorization", "Bearer " + accessToken) //passando no header o token
 					.contentType(MediaType.APPLICATION_JSON));
 
 		result.andExpect(status().isOk());
@@ -58,7 +59,7 @@ public class DepartmentControllerIT {
 	}
 	
 	@Test
-	public void findAllShouldReturnAllResourcesSortedByNameWhenEmployeeLogged() throws Exception {
+	public void findAllShouldReturnAllResourcesSortedByNameWhenEmployeeLogged() throws Exception { //retornar todos os recursos ordenados por nome quando o operador estiver logado, operador também tem essa permissão
 		
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, operatorUsername, operatorPassword);
 		
@@ -74,7 +75,7 @@ public class DepartmentControllerIT {
 	}
 	
 	@Test
-	public void findAllShouldReturn401WhenNoUserLogged() throws Exception {
+	public void findAllShouldReturn401WhenNoUserLogged() throws Exception { //retornar 401 quando o usuário não estiver logado, ou seja, sem nenhum usuário logado(UNAUTORIZED)
 		
 		ResultActions result =
 				mockMvc.perform(get("/departments")

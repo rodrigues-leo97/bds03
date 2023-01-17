@@ -16,7 +16,7 @@ import org.springframework.util.MultiValueMap;
 @Component
 public class TokenUtil {
 
-	@Value("${security.oauth2.client.client-id}")
+	@Value("${security.oauth2.client.client-id}") //não tem esses valores AINDA no clientId e clientSecret
 	private String clientId;
 
 	@Value("${security.oauth2.client.client-secret}")

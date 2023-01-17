@@ -47,7 +47,7 @@ public class EmployeeControllerIT {
 	}
 	
 	@Test
-	public void insertShouldReturn403WhenOperatorLogged() throws Exception {
+	public void insertShouldReturn403WhenOperatorLogged() throws Exception { //retornar 403 quando operador estiver logado, ou seja, sem permissão... dará esse erro quando um operador tentar inserir um novo funcionário
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, operatorUsername, operatorPassword);
 
@@ -65,7 +65,7 @@ public class EmployeeControllerIT {
 	}	
 
 	@Test
-	public void insertShouldReturn401WhenNoUserLogged() throws Exception {
+	public void insertShouldReturn401WhenNoUserLogged() throws Exception { //retornar 401 quando não estiver nenhum usuário logado
 
 		EmployeeDTO dto = new EmployeeDTO(null, "Joaquim", "joaquim@gmail.com", 1L);
 		String jsonBody = objectMapper.writeValueAsString(dto);
@@ -80,12 +80,12 @@ public class EmployeeControllerIT {
 	}	
 	
 	@Test
-	public void insertShouldInsertResourceWhenAdminLoggedAndCorrectData() throws Exception {
+	public void insertShouldInsertResourceWhenAdminLoggedAndCorrectData() throws Exception { //inserir o recurso quando admin estiver logado e os dados estiverem corretos
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
 
 		EmployeeDTO dto = new EmployeeDTO(null, "Joaquim", "joaquim@gmail.com", 1L);
-		String jsonBody = objectMapper.writeValueAsString(dto);
+		String jsonBody = objectMapper.writeValueAsString(dto); //transformo pra Json
 		
 		ResultActions result =
 				mockMvc.perform(post("/employees")
@@ -94,15 +94,15 @@ public class EmployeeControllerIT {
 					.contentType(MediaType.APPLICATION_JSON)
 					.accept(MediaType.APPLICATION_JSON));
 		
-		result.andExpect(status().isCreated());
-		result.andExpect(jsonPath("$.id").exists());
-		result.andExpect(jsonPath("$.name").value("Joaquim"));
-		result.andExpect(jsonPath("$.email").value("joaquim@gmail.com"));
-		result.andExpect(jsonPath("$.departmentId").value(1L));
+		result.andExpect(status().isCreated()); //201
+		result.andExpect(jsonPath("$.id").exists()); //verificar se id existe
+		result.andExpect(jsonPath("$.name").value("Joaquim")); //verificando o nome
+		result.andExpect(jsonPath("$.email").value("joaquim@gmail.com")); //verificando o email
+		result.andExpect(jsonPath("$.departmentId").value(1L)); //testando id do departamento
 	}	
 
 	@Test
-	public void insertShouldReturn422WhenAdminLoggedAndBlankName() throws Exception {
+	public void insertShouldReturn422WhenAdminLoggedAndBlankName() throws Exception { //logado como admin e retorna o 422 pq inseriu um nome em branco
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
 
@@ -116,13 +116,13 @@ public class EmployeeControllerIT {
 					.contentType(MediaType.APPLICATION_JSON)
 					.accept(MediaType.APPLICATION_JSON));
 		
-		result.andExpect(status().isUnprocessableEntity());
-		result.andExpect(jsonPath("$.errors[0].fieldName").value("name"));
-		result.andExpect(jsonPath("$.errors[0].message").value("Campo requerido"));
+		result.andExpect(status().isUnprocessableEntity()); //422 - pois inseriu um nome em branco
+		result.andExpect(jsonPath("$.errors[0].fieldName").value("name")); //vou informar que tem que dar um erro no campo name
+		result.andExpect(jsonPath("$.errors[0].message").value("Campo requerido")); // e a mensagem de erro é Campo requerido
 	}
 
 	@Test
-	public void insertShouldReturn422WhenAdminLoggedAndInvalidEmail() throws Exception {
+	public void insertShouldReturn422WhenAdminLoggedAndInvalidEmail() throws Exception { //dar 422 quando logado como admin e email inválido, igual ao de cima, porém, agora para o email
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
 
@@ -142,7 +142,7 @@ public class EmployeeControllerIT {
 	}
 
 	@Test
-	public void insertShouldReturn422WhenAdminLoggedAndNullDepartment() throws Exception {
+	public void insertShouldReturn422WhenAdminLoggedAndNullDepartment() throws Exception { //retorna 422 quando admin logado e departamento nullo, iguais aos de cima, só que agora para o departamento
 
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
 
