@@ -21,8 +21,6 @@ public class User implements UserDetails, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-
     @Column(unique = true) //para impedir que haja mais emails repetidos
     private String email;
 
@@ -34,9 +32,8 @@ public class User implements UserDetails, Serializable {
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(Long id, String firstName, String email, String password, Set<Role> roles) {
+    public User(Long id, String email, String password, Set<Role> roles) {
         this.id = id;
-        this.firstName = firstName;
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -53,14 +50,6 @@ public class User implements UserDetails, Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getEmail() {
