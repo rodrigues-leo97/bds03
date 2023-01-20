@@ -13,7 +13,7 @@ public class AppConfig {
     @Value("${jwt.secret") //com essa anotação ele pega o valor da variável que está definido no application.properties
     private String jwtSecret;
 
-    @Bean //é uma annotation de MÉTODO, e dizendo que está instância é um componente gerenciado pelo SPRING e posso instancia-lo em outro componente
+    @Bean //é uma annotation de MÉTODO, e dizendo que está instância é um componente gerenciado pelo SPRING e posso instancialo em outro componente
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -22,7 +22,7 @@ public class AppConfig {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
-        tokenConverter.setSigningKey(jwtSecret);
+        tokenConverter.setSigningKey(jwtSecret); //por enquanto a assinatura irá ficar hardcode aqui, depois iremos colocar ela no PROPERTIES(Serve para registrar a chave do token)
         return tokenConverter;
     }
 

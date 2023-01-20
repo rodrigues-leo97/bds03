@@ -12,24 +12,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class UserService implements UserDetailsService {
 
     private static Logger logger = LoggerFactory.getLogger(UserService.class); //para imprimir logs
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
 
-    @Transactional(readOnly = true)
-    public Page<UserDTO> findAll(Pageable pageable) {
-        Page<User> userPage = userRepository.findAll(pageable);
-        return userPage.map(x -> new UserDTO(x));
-    }
-
+//    @Transactional(readOnly = true)
+//    public Page<UserDTO> findAll(Pageable pageable) {
+//        Page<User> userPage = userRepository.findAll(pageable);
+//        return userPage.map(x -> new UserDTO(x));
+//    }
 
 
     @Override

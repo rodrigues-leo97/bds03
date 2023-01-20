@@ -27,7 +27,7 @@ public class JwtTokenEnhancer implements TokenEnhancer {
         Map<String, Object> map = new HashMap<>();
 
         //inserindo informações ao token(informo oq inserir mas ainda não inseri)
-        map.put("userFirstName", user.getFirstName());
+        map.put("userFirstName", user.getUsername());
         map.put("userId", user.getId());
 
         //agora para inserir de fato ao token essas informações tenho que usar o objeto OAuth2AccessToken

@@ -10,6 +10,7 @@ import com.devsuperior.bds03.dto.EmployeeDTO;
 import com.devsuperior.bds03.entities.Department;
 import com.devsuperior.bds03.entities.Employee;
 import com.devsuperior.bds03.repositories.EmployeeRepository;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 public class EmployeeService {
@@ -32,4 +33,5 @@ public class EmployeeService {
 		entity = repository.save(entity);
 		return new EmployeeDTO(entity);
 	}
+
 }
